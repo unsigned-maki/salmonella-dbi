@@ -1,0 +1,9 @@
+gunicorn
+pymongo
+mongoengine
+Flask
+Faker
+pytest
+pyjwt
+dnspython
+psycopg2

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Create Account{% endblock %}
+{% block options %}
+{% if logged_in %}
+{% include "sidebars/sidebar.html" %}
+{% else %}
+{% include "sidebars/sidebar_anonymous.html" %}
+{% endif %}
+{% endblock %}
+{% block content %}
+<script>
+    let selected = 0;
+
+    function vote(id) {
+        if (selected != 0) {
+            document.getElementById(selected).checked = false;
+        }
+        selected = id;
+        document.getElementById(id).checked = true;
+    }
+</script>
+<div margin="10" class="content-wrapper d-flex justify-content-center allign-items-center">
+    <div class="w-800 mw-full">
+        <div class="card">
+            <div class="d-flex flex-column mb-20">
+                <div class="font-size-24">{{ poll.title }}</div>
+                <div class="font-size-12">by {{ author }}</div>
+                <div class="font-size-12 mt-10">{{ poll.description }}</div>
+            </div>
+            <form action="/poll/vote/{{ poll.id.hex }}" method="post">
+                <div class="d-flex align-items-start flex-column">
+                    {% for option in poll.options %}
+                    <div class="input-group w-400 mb-20">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <div class="custom-checkbox">
+                                    <input name="{{ option.id.hex }}" type="checkbox" id="{{ option.id.hex }}" value="" onclick="vote('{{ option.id.hex }}')" />
+                                    <label for="{{ option.id.hex }}" class="blank"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" placeholder="{{ option.text }}"
+                            disabled="disabled" />
+                    </div>
+                    {% endfor %}
+                    <input class="btn btn-primary btn-block" type="submit" value="Vote" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

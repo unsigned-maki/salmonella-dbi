@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+{% block options %}
+{% include "sidebars/sidebar.html" %}
+{% endblock %}
+{% block content %}
+{% include "modals/share_modal.html" %}
+<!-- Content wrapper start -->
+<div class="content-wrapper">
+    <br>
+    <h2 style="text-align: center;">Your Polls</h2>
+    {% if poll_count < 1 %}
+    <p style="text-align: center;" class="font-size-24">You have no active polls, start your journey by <a href="/poll/create">creating one</a>!</p>
+    {% endif %}
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            {% for poll in polls %}
+            <div class="col-s align-items-center">
+                <div class="card w-300 h-250">
+                    <h2 class="card-title mb-0 font-size-22" style="text-align: center;">{{ poll.title }}</h2>
+                    <canvas id="{{ poll.id.hex }}"></canvas>
+                    <div class="mt-15">
+                        <div class="btn-group" role="group" aria-label="First group">
+                            <a href="/poll/view/{{ poll.id.hex }}" class="btn" type="button">View</a>
+                            <a onclick="document.getElementById('share-modal-link').innerText = `${window.location.origin}/poll/vote/{{ poll.id.hex }}`" href="#share-modal" class="btn" type="button">Share</a>
+                        </div>
+                        <div class="btn-group ml-10" role="group" aria-label="Second group">
+                            <a href="/poll/delete/{{ poll.id.hex }}" class="btn btn-danger" type="button">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<script>
+var chart;
+
+{% for poll in polls %}
+chart = new Chart(
+    document.getElementById("{{ poll.id.hex }}"),
+    {
+        type: 'bar',
+        data: {
+            labels: [{% for option in poll.options %}"{{ option.text }}",{% endfor %}],
+            datasets: [{
+                label: "# of Votes",
+                data: [{% for option in poll.options %}{{ option.votes }},{% endfor %}],
+                backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+            y: {
+                beginAtZero: true
+            }
+            }
+        }
+    }
+);
+{% endfor %}
+</script>
+<!-- Content wrapper end -->
+{% endblock %}

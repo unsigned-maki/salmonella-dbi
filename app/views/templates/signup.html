@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Create Account{% endblock %}
+{% block options %}
+{% include "sidebars/sidebar_anonymous.html" %}
+{% endblock %}
+{% block content %}
+<!-- Content wrapper start -->
+<div margin="10" class="content-wrapper d-flex justify-content-center allign-items-center">
+  <div class="w-800 mw-full">
+    <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
+    <div class="card">
+      <h2 class="card-title">Sign Up</h2>
+      <form action="/user/signup" method="post" class="w-800 mw-full">
+        <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
+        <div class="form-group">
+          <label for="username" class="required">Username</label>
+          <input name="name" type="text" class="form-control" id="username" placeholder="Username"
+            required="required" />
+          <div class="form-text">
+            Must not contain spaces.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password" class="required">Password</label>
+          <input name="password" type="password" class="form-control" id="password" placeholder="Password"
+            required="required" />
+          <div class="form-text">
+            Must be at least 8 characters long, and must not contain spaces.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="confirm-password" class="required">Confirm password</label>
+          <input name="confirm" type="password" class="form-control" id="confirm-password"
+            placeholder="Confirm password" required="required" />
+          <div class="form-text">
+            Must match the above password exactly.
+          </div>
+        </div>
+        <div class="form-group">
+          Already have an account? Login <a href="/user/login">here</a>.
+        </div>
+        <input class="btn btn-primary btn-block" type="submit" value="Sign up" />
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

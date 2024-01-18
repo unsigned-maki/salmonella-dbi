@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block options %}
+{% include "sidebars/sidebar_anonymous.html" %}
+{% endblock %}
+{% block content %}
+<!-- Content wrapper start -->
+<div margin="10" class="content-wrapper d-flex justify-content-center allign-items-center">
+  <div class="w-800 mw-full">
+    <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
+    <div class="card">
+      <h2 class="card-title">Login</h2>
+      <form action="/user/login" method="post" class="w-500 mw-full">
+        <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
+        <div class="form-group">
+          <label for="username" class="required">Username</label>
+          <input name="name" type="text" class="form-control" id="username" placeholder="Username"
+            required="required" />
+        </div>
+        <div class="form-group">
+          <label for="password" class="required">Password</label>
+          <input name="password" type="password" class="form-control" id="password" placeholder="Password"
+            required="required" />
+          <div class="custom-checkbox w-200 h-20 mw-full mt-10">
+            <input name="keep" type="checkbox" id="checkbox-1" value="">
+            <label for="checkbox-1">Stay logged in</label>
+          </div>
+        </div>
+        <div class="form-group">
+          Don't have an account? Create one <a href="/user/signup">here</a>.
+        </div>
+        <input class="btn btn-primary btn-block" type="submit" value="Login" />
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Content wrapper end -->
+{% endblock %}
